@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "netlify build --prod"
+  },
   "dependencies": {
     "@cyber2024/pdf-parse-fixed": "^1.2.5",
     "@pinecone-database/pinecone": "^0.0.12",
