@@ -28,6 +28,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
 router.post('/upload', upload.single('pdf'), async (req, res) => {
     const pdfPath = req.file.path;
     const pdfBuffer = fs.readFileSync(pdfPath);
