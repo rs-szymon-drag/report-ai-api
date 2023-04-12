@@ -21,12 +21,13 @@ router.get('/', (req, res) => {
 
 router.post('/upload', async (req, res) => {
     
-    const pdfBuffer = Buffer.from(req.body, 'base64').toString('binary')
-    console.log("hi", pdfBuffer)
+    const pdfBuffer = Buffer.from(req.body.pdf, 'base64').toString('binary')
+    console.log("hi")
     let parsedText
     
     try {
         parsedText = await pdfParse(pdfBuffer)
+        console.log(parsedText)
         parsedText = parsedText?.text
     } catch {
         res.status(500).send('Error parsing PDF file')
