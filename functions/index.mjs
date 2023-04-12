@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
+import serverless from 'serverless-http'
 import express from 'express'
 import multer from 'multer'
 import cors from 'cors'
@@ -14,6 +15,8 @@ import Pinecone from "./clients/pinecone-client.mjs"
 const app = express()
 app.use(cors())
 
+const router = express.Router()
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/');
@@ -25,7 +28,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/upload', upload.single('pdf'), async (req, res) => {
+router.post('/upload', upload.single('pdf'), async (req, res) => {
     const pdfPath = req.file.path;
     const pdfBuffer = fs.readFileSync(pdfPath);
 
@@ -65,4 +68,5 @@ app.post('/upload', upload.single('pdf'), async (req, res) => {
     }
 });
 
-export default app
+app.use('/.netlify/functions/index', router)
+export default serverless(app)
