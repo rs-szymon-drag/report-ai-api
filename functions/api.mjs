@@ -17,14 +17,13 @@ const app = express()
 app.use(cors())
 app.use(express.json());
 
-const router = express.Router()
+// const router = express.Router()
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-router.post('/upload', upload.single('pdf'), async (req, res) => {
-    console.log("START")
+app.post('/upload', upload.single('pdf'), async (req, res) => {
     let parsedText = ''
     try {
         const buffer = req.file.buffer
@@ -60,5 +59,5 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
     }
 });
 
-app.use('/.netlify/functions/api', router)
+// app.use('/.netlify/functions/api', router)
 module.exports.handler = serverless(app)
