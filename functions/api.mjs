@@ -35,6 +35,7 @@ router.post('/upload', async (req, res) => {
         res.status(500).send('Error parsing PDF file')
     }
 
+    console.log("recursive text", parsedText)
     const textSplitter = new RecursiveCharacterTextSplitter({
         chunkSize: 1000,
         chunkOverlap: 200,
