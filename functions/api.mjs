@@ -33,12 +33,13 @@ router.get('/', (req, res) => {
 })
 
 router.post('/upload', upload.single('pdf'), async (req, res) => {
-    const pdfPath = req.file.path;
-    const pdfBuffer = fs.readFileSync(pdfPath);
+    // const pdfPath = req.file.path;
+    // const pdfBuffer = fs.readFileSync(pdfPath);
+    const { pdf } = req.body
+    const pdfBuffer = Buffer.from(pdf, 'base64').toString('binary')
 
     let parsedText
     
-
     try {
         parsedText = await pdfParse(pdfBuffer)
         parsedText = parsedText?.text
