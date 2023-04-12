@@ -69,4 +69,4 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
 });
 
 app.use('/.netlify/functions/index', router)
-export default serverless(app)
+module.exports.handler = serverless(app)
