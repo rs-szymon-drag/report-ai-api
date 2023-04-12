@@ -61,4 +61,4 @@ app.post('/upload', upload.single('pdf'), async (req, res) => {
 // app.use('/.netlify/functions/api', router)
 // module.exports.handler = serverless(app)
 
-export default app
+app.listen(process.env.PORT || 4000)
