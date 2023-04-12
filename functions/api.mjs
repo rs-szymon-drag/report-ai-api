@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/upload', upload.single('pdf'), async (req, res) => {
-    const buffer = req.file.buffer
+    const buffer = Buffer.alloc(req.file.buffer)
     
     let parsedText = ''
     try {
