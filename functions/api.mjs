@@ -26,7 +26,7 @@ router.post('/upload', async (req, res) => {
     let parsedText
     
     try {
-        parsedText = await pdfParse(pdfBuffer)
+        parsedText = await pdfParse.pdfBufferToText(pdfBuffer)
         console.log(parsedText)
         parsedText = parsedText?.text
     } catch {
