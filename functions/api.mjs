@@ -3,9 +3,7 @@ dotenv.config()
 
 import serverless from 'serverless-http'
 import express from 'express'
-import multer from 'multer'
 import cors from 'cors'
-import fs from 'fs'
 import pdfParse from "@cyber2024/pdf-parse-fixed"
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
@@ -17,25 +15,15 @@ app.use(cors())
 
 const router = express.Router()
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-
-const upload = multer({ storage: storage });
-
 router.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-router.post('/upload', upload.single('pdf'), async (req, res) => {
+router.post('/upload', async (req, res) => {
     // const pdfPath = req.file.path;
     // const pdfBuffer = fs.readFileSync(pdfPath);
     const { pdf } = req.body
+    console.log("pdf")
     const pdfBuffer = Buffer.from(pdf, 'base64').toString('binary')
 
     let parsedText
