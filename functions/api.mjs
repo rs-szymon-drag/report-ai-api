@@ -10,7 +10,7 @@ import pdfParse from "@cyber2024/pdf-parse-fixed"
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
 import { PineconeStore } from "langchain/vectorstores/pinecone"
-import Pinecone from "./clients/pinecone-client.mjs"
+import Pinecone from "../clients/pinecone-client.mjs"
 
 const app = express()
 app.use(cors())
