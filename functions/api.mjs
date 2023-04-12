@@ -9,9 +9,13 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 import { OpenAIEmbeddings } from "langchain/embeddings/openai"
 import { PineconeStore } from "langchain/vectorstores/pinecone"
 import Pinecone from "../clients/pinecone-client.mjs"
+import multer from 'multer'
+
+const upload = multer();
 
 const app = express()
 app.use(cors())
+app.use(express.json());
 
 const router = express.Router()
 
@@ -19,23 +23,17 @@ router.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-router.post('/upload', async (req, res) => {
-    const { pdf } = req.body
-    console.log("pdf", !!pdf)
-
-    const pdfBuffer = Buffer.from(req.body, 'base64').toString('binary')
-    console.log("hi")
-    let parsedText
+router.post('/upload', upload.single('pdf'), async (req, res) => {
+    const buffer = req.file.buffer
     
+    let parsedText = ''
     try {
-        parsedText = await pdfParse.pdfBufferToText(pdfBuffer)
-        console.log("parsed text", parsedText)
-        parsedText = parsedText?.text
+        const text = await pdfParse(buffer)
+        parsedText = text?.text
     } catch {
         res.status(500).send('Error parsing PDF file')
     }
 
-    console.log("recursive text", parsedText)
     const textSplitter = new RecursiveCharacterTextSplitter({
         chunkSize: 1000,
         chunkOverlap: 200,
