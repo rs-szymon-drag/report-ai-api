@@ -24,10 +24,10 @@ router.get('/', (req, res) => {
 })
 
 router.post('/upload', upload.single('pdf'), async (req, res) => {
-    const buffer = Buffer.alloc(req.file.buffer)
-    
+    console.log("START")
     let parsedText = ''
     try {
+        const buffer = req.file.buffer
         const text = await pdfParse(buffer)
         parsedText = text?.text
     } catch {
