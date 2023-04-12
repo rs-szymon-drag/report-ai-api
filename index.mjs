@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-import serverless from 'serverless-http'
 import express from 'express'
 import cors from 'cors'
 import pdfParse from "@cyber2024/pdf-parse-fixed"
@@ -60,4 +59,6 @@ app.post('/upload', upload.single('pdf'), async (req, res) => {
 });
 
 // app.use('/.netlify/functions/api', router)
-module.exports.handler = serverless(app)
+// module.exports.handler = serverless(app)
+
+export default app
